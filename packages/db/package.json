@@ -1,0 +1,9 @@
+{
+  "name": "@exscientia/db",
+  "packageManager": "yarn@3.0.1",
+  "dependencies": {
+    "dotenv": "^10.0.0",
+    "graphile-migrate": "^1.2.0",
+    "pg": "^8.7.1"
+  }
+}
