@@ -2,7 +2,17 @@ services:
   db:
     image: postgres:13-alpine
     volumes:
-      - ./packages/db/migrations/up:/docker-entrypoint-initdb.d
+      - ./packages/db/migrations:/docker-entrypoint-initdb.d
     env_file: ./.env
     ports:
       - 5432:5432
+  graphql:
+    image: graphile/postgraphile
+    depends_on:
+      - db
+    ports:
+      - 5000:5000
+    env_file: ./.env
+    environment:
+      # when running in docker network db is avaible under the name of the service
+      - PGHOST=db

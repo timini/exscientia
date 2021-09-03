@@ -1,26 +1,26 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { gql, useQuery } from "@apollo/client";
+import React from "react";
+const ALL_COMPOUNDS = gql`
+  query GetAllCompounds {
+    allCompounds {
+      nodes {
+        compoundId
+        assayResultsByCompoundId {
+          nodes {
+            resultId
+          }
+        }
+      }
+    }
+  }
+`;
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+  const { loading, error, data } = useQuery(ALL_COMPOUNDS);
+
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error :(</p>;
+  return data.allCompounds.map(({ compoundId }) => <div>{compoundId}</div>);
 }
 
 export default App;
