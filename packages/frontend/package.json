@@ -4,6 +4,8 @@
   "private": true,
   "dependencies": {
     "@apollo/client": "^3.4.10",
+    "@exscientia/components": "workspace:packages/components",
+    "@exscientia/types": "workspace:packages/types",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
@@ -11,9 +13,7 @@
     "@types/node": "^12.0.0",
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
-    "eslint-config-react-app": "^6.0.0",
-    "graphql": "^15.5.2",
-    "postcss": "^8.3.6",
+    "graphql": "^15.5.3",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-scripts": "4.0.3",
@@ -43,9 +43,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "resolutions": {
-    "@exscientia/types": "portal:../types",
-    "@exscientia/components": "portal:../components"
   }
 }

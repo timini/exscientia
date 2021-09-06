@@ -8,5 +8,6 @@
   },
   "scripts": {
     "generate": "graphql-codegen"
-  }
+  },
+  "types": "./dist/index.d.ts"
 }
