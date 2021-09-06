@@ -1,13 +1,16 @@
 import { gql } from "@apollo/client";
-import { Compound } from "@exscientia/types";
+import { Compound, CompoundsConnection, isCompound } from "@exscientia/types";
+import client from "apollo-client";
 import type { NextPage } from "next";
-import client from "../apollo-client";
+import { GetServerSideProps } from "next";
+import Link from "next/link";
 
-const ALL_COMPOUNDS = gql`
+const GET_ALL_COMPOUNDS = gql`
   query GetAllCompounds {
     allCompounds {
       nodes {
         compoundId
+        molecularFormula
         assayResultsByCompoundId {
           nodes {
             resultId
@@ -18,23 +21,36 @@ const ALL_COMPOUNDS = gql`
   }
 `;
 
-export async function getServerSideProps() {
-  const { data } = await client.query({
-    query: ALL_COMPOUNDS,
+type GET_ALL_COMPOUNDS_DATA = {
+  allCompounds: CompoundsConnection;
+};
+
+export const getServerSideProps: GetServerSideProps<{
+  compounds: Compound[];
+}> = async () => {
+  const { data } = await client.query<GET_ALL_COMPOUNDS_DATA>({
+    query: GET_ALL_COMPOUNDS,
   });
   return {
     props: {
-      compounds: data.allCompounds.nodes,
+      compounds: data.allCompounds.nodes.filter(isCompound),
     },
   };
-}
+};
 
-const Home: NextPage = ({ compounds }: { compounds: Compound[] }) => (
+const CompoundListPage: NextPage<{ compounds: Compound[] }> = ({
+  compounds,
+}) => (
   <div>
-    {compounds.map(({ compoundId }) => (
-      <div key={compoundId}>{compoundId}</div>
+    {compounds.map((compound) => (
+      <div key={compound.compoundId}>
+        {compound.molecularFormula}{" "}
+        <Link href={`/compound/${compound.compoundId}`}>
+          <a>{compound.compoundId}</a>
+        </Link>
+      </div>
     ))}
   </div>
 );
 
-export default Home;
+export default CompoundListPage;

@@ -9,5 +9,5 @@
   "scripts": {
     "generate": "graphql-codegen"
   },
-  "main": "src/types.d.ts"
+  "main": "src/index.ts"
 }
