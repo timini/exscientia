@@ -1,13 +1,15 @@
 {
   "name": "exscientia",
-  "packageManager": "yarn@3.0.1",
+  "packageManager": "yarn@3.0.2",
   "private": true,
   "workspaces": [
     "packages/*"
   ],
   "dependencies": {
-    "eslint": "^7.32.0",
-    "prettier": "^2.3.2",
+    "@yarnpkg/sdks": "2.4.2-rc.2",
     "typescript": "^4.4.2"
+  },
+  "scripts": {
+    "vscode-setup": "yarn sdks vscode"
   }
 }
