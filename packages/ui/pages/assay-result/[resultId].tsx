@@ -4,6 +4,7 @@ import client from "apollo-client";
 import { Stat } from "components";
 import type { NextPage } from "next";
 import { GetServerSideProps } from "next";
+import Link from "next/link";
 
 const GET_ASSAY_RESULT_BY_ID = gql`
   query GetAssayResultById($resultId: Int!) {
@@ -14,6 +15,10 @@ const GET_ASSAY_RESULT_BY_ID = gql`
       operator
       unit
       val
+      compoundByCompoundId {
+        compoundId
+        molecularFormula
+      }
     }
   }
 `;
@@ -81,6 +86,31 @@ const AssayResultDetailPage: NextPage<{
             value={assayResult.unit || "Unknown"}
             description={<div className="">The result unit.</div>}
           />
+        </div>
+        <div className="mt-5">
+          <h1>Compound</h1>
+          <table className="table w-full">
+            <thead>
+              <tr>
+                <th></th>
+                <th>Molecular Formula</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th>
+                  <Link
+                    href={`/compound/${assayResult.compoundByCompoundId?.compoundId}`}
+                  >
+                    <a className="link link-primary">
+                      {assayResult.compoundByCompoundId?.compoundId}
+                    </a>
+                  </Link>
+                </th>
+                <td>{assayResult.compoundByCompoundId?.molecularFormula}</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
     </div>
