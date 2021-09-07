@@ -11,10 +11,16 @@
   "dependencies": {
     "@apollo/client": "^3.4.10",
     "@exscientia/types": "workspace:packages/types",
+    "@tailwindcss/typography": "^0.4.1",
+    "autoprefixer": "latest",
+    "daisyui": "^1.14.0",
     "graphql": "^15.5.3",
     "next": "11.1.2",
+    "postcss": "latest",
     "react": "17.0.2",
-    "react-dom": "17.0.2"
+    "react-dom": "17.0.2",
+    "react-table": "^7.7.0",
+    "tailwindcss": "latest"
   },
   "devDependencies": {
     "@types/node": "^16.7.10",

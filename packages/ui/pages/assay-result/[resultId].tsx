@@ -1,6 +1,7 @@
 import { gql } from "@apollo/client";
 import { AssayResult } from "@exscientia/types";
 import client from "apollo-client";
+import { Stat } from "components";
 import type { NextPage } from "next";
 import { GetServerSideProps } from "next";
 
@@ -10,6 +11,9 @@ const GET_ASSAY_RESULT_BY_ID = gql`
       resultId
       result
       bioTarget
+      operator
+      unit
+      val
     }
   }
 `;
@@ -48,10 +52,37 @@ const AssayResultDetailPage: NextPage<{
 }> = ({ assayResult }) => {
   if (!assayResult) return <div>404</div>;
   return (
-    <div>
-      <div>ID: {assayResult.resultId}</div>
-      <div>Result: {assayResult.result}</div>
-      <div>bio target: {assayResult.bioTarget}</div>
+    <div className="card bordered rounded-lg shadow-lg">
+      <div className="card-body">
+        <h2 className="card-title">
+          {assayResult.bioTarget}{" "}
+          <div className="badge badge-accent">target</div>
+        </h2>
+        <div className="w-full shadow stats">
+          <Stat
+            title="Result"
+            value={assayResult.result || "Unknown"}
+            description={<div className="">The result type of the assay.</div>}
+          />
+          <Stat
+            title="Value"
+            value={assayResult.val || "Unknown"}
+            description={<div className="">The result value.</div>}
+          />
+        </div>
+        <div className="w-full shadow stats">
+          <Stat
+            title="Operator"
+            value={assayResult.operator || "Unknown"}
+            description={<div className="">The value operator.</div>}
+          />
+          <Stat
+            title="Unit"
+            value={assayResult.unit || "Unknown"}
+            description={<div className="">The result unit.</div>}
+          />
+        </div>
+      </div>
     </div>
   );
 };

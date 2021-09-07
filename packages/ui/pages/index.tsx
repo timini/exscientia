@@ -41,16 +41,17 @@ export const getServerSideProps: GetServerSideProps<{
 const CompoundListPage: NextPage<{ compounds: Compound[] }> = ({
   compounds,
 }) => (
-  <div>
+  <article className="prose lg:prose-xl">
+    <h1>Compounds</h1>
     {compounds.map((compound) => (
       <div key={compound.compoundId}>
         {compound.molecularFormula}{" "}
         <Link href={`/compound/${compound.compoundId}`}>
-          <a>{compound.compoundId}</a>
+          <a className="link link-primary">{compound.compoundId}</a>
         </Link>
       </div>
     ))}
-  </div>
+  </article>
 );
 
 export default CompoundListPage;
