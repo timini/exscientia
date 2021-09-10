@@ -1848,6 +1848,7 @@ __metadata:
     "@tailwindcss/typography": ^0.4.1
     "@types/node": ^16.7.10
     "@types/react": 17.0.20
+    "@types/react-table": ^7.7.2
     autoprefixer: latest
     daisyui: ^1.14.0
     eslint: 7.32.0
@@ -4137,6 +4138,15 @@ __metadata:
   dependencies:
     "@types/react": "*"
   checksum: 8f4dce3eb5c70178c5ec2f7434983d632d02a0371a80c31ea012e37a2b8b2174bee482c3b85764333cbe3bcba9132b95307e23ac56d05d490e485e371bdcea46
+  languageName: node
+  linkType: hard
+
+"@types/react-table@npm:^7.7.2":
+  version: 7.7.2
+  resolution: "@types/react-table@npm:7.7.2"
+  dependencies:
+    "@types/react": "*"
+  checksum: d15f7d0772dcfbf9b2c83d74fe55b607da0f6c3f8b647fcd32b346746882bd214c16882f429f228e0efbf5fb8eb41712eecc15208c0f322768170600f2611fb4
   languageName: node
   linkType: hard
 

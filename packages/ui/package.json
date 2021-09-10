@@ -12,6 +12,7 @@
     "@apollo/client": "^3.4.10",
     "@exscientia/types": "workspace:packages/types",
     "@tailwindcss/typography": "^0.4.1",
+    "@types/react-table": "^7.7.2",
     "autoprefixer": "latest",
     "daisyui": "^1.14.0",
     "graphql": "^15.5.3",

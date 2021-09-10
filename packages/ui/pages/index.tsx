@@ -1,9 +1,15 @@
 import { gql } from "@apollo/client";
-import { Compound, CompoundsConnection, isCompound } from "@exscientia/types";
+import {
+  Compound,
+  CompoundsConnection,
+  isDefinitelyCompound,
+} from "@exscientia/types";
 import client from "apollo-client";
+import { Table } from "components";
 import type { NextPage } from "next";
 import { GetServerSideProps } from "next";
 import Link from "next/link";
+import { Column } from "react-table";
 
 const GET_ALL_COMPOUNDS = gql`
   query GetAllCompounds {
@@ -11,6 +17,8 @@ const GET_ALL_COMPOUNDS = gql`
       nodes {
         compoundId
         molecularFormula
+        alogp
+        molecularWeight
         assayResultsByCompoundId {
           nodes {
             resultId
@@ -33,25 +41,37 @@ export const getServerSideProps: GetServerSideProps<{
   });
   return {
     props: {
-      compounds: data.allCompounds.nodes.filter(isCompound),
+      compounds: data.allCompounds.nodes.filter(isDefinitelyCompound),
     },
   };
 };
 
+const columns: Column<Compound>[] = [
+  {
+    Header: "",
+    accessor: "compoundId",
+    Cell: ({ row }) => (
+      <Link href={`/compound/${row.values.compoundId}`} {...row.getRowProps()}>
+        <a className="link link-primary">{row.values.compoundId}</a>
+      </Link>
+    ),
+  },
+  { Header: "Molecular Formula", accessor: "molecularFormula" },
+  { Header: "ALogP", accessor: "alogp" },
+  { Header: "Molecular Weight", accessor: "molecularWeight" },
+];
+
 const CompoundListPage: NextPage<{ compounds: Compound[] }> = ({
   compounds,
-}) => (
-  <article className="prose lg:prose-xl">
-    <h1>Compounds</h1>
-    {compounds.map((compound) => (
-      <div key={compound.compoundId}>
-        {compound.molecularFormula}{" "}
-        <Link href={`/compound/${compound.compoundId}`}>
-          <a className="link link-primary">{compound.compoundId}</a>
-        </Link>
+}) => {
+  return (
+    <div className="card lg:card-side bordered rounded-lg shadow-lg">
+      <div className="card-body">
+        <h1 className="card-title">Compounds</h1>
+        <Table<Compound> columns={columns} data={compounds} />
       </div>
-    ))}
-  </article>
-);
+    </div>
+  );
+};
 
 export default CompoundListPage;

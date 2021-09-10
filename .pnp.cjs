@@ -4234,6 +4234,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@tailwindcss/typography", "virtual:7ab89fb17dca73ae0c1679c8ff8350850e7768f24d938a1edf0ae8d5beb7a498906b37f806dda2f4e74f51d76a712f299b3e85dbfb830f68253c79268fb3a531#npm:0.4.1"],
             ["@types/node", "npm:16.7.10"],
             ["@types/react", "npm:17.0.20"],
+            ["@types/react-table", "npm:7.7.2"],
             ["autoprefixer", "virtual:7ab89fb17dca73ae0c1679c8ff8350850e7768f24d938a1edf0ae8d5beb7a498906b37f806dda2f4e74f51d76a712f299b3e85dbfb830f68253c79268fb3a531#npm:10.3.4"],
             ["daisyui", "npm:1.14.0"],
             ["eslint", "npm:7.32.0"],
@@ -7499,6 +7500,16 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/@types-react-syntax-highlighter-npm-11.0.5-90d671364b-8f4dce3eb5.zip/node_modules/@types/react-syntax-highlighter/",
           "packageDependencies": [
             ["@types/react-syntax-highlighter", "npm:11.0.5"],
+            ["@types/react", "npm:17.0.19"]
+          ],
+          "linkType": "HARD",
+        }]
+      ]],
+      ["@types/react-table", [
+        ["npm:7.7.2", {
+          "packageLocation": "./.yarn/cache/@types-react-table-npm-7.7.2-ec9dc9e0a7-d15f7d0772.zip/node_modules/@types/react-table/",
+          "packageDependencies": [
+            ["@types/react-table", "npm:7.7.2"],
             ["@types/react", "npm:17.0.19"]
           ],
           "linkType": "HARD",

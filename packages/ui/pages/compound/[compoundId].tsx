@@ -1,10 +1,15 @@
 import { gql } from "@apollo/client";
-import { Compound } from "@exscientia/types";
+import {
+  AssayResult,
+  Compound,
+  isDefinitelyAssayResult,
+} from "@exscientia/types";
 import client from "apollo-client";
-import { Stat } from "components";
+import { Stat, Table } from "components";
 import type { NextPage } from "next";
 import { GetServerSideProps } from "next";
 import Link from "next/link";
+import { Column } from "react-table";
 
 const GET_COMPOUND_BY_ID = gql`
   query GetCompoundById($compoundId: Int!) {
@@ -57,18 +62,40 @@ export const getServerSideProps: GetServerSideProps<
   };
 };
 
+const columns: Column<AssayResult>[] = [
+  {
+    Header: "",
+    accessor: "resultId",
+    Cell: ({ row }) => (
+      <Link
+        href={`/assay-result/${row.values.resultId}`}
+        {...row.getRowProps()}
+      >
+        <a className="link link-primary">{row.values.resultId}</a>
+      </Link>
+    ),
+  },
+  {
+    Header: "Bio Target",
+    accessor: "bioTarget",
+  },
+  {
+    Header: "Result",
+    accessor: "result",
+  },
+  {
+    Header: "Value",
+    accessor: "val",
+  },
+];
+
 const CompoundDetailPage: NextPage<{ compound: Compound | undefined }> = ({
   compound,
 }) => {
   if (!compound) return <div>404</div>;
   return (
     <>
-      {/* <div>
-        <article className="prose lg:prose-xl">
-          <h1>Compound {compound.compoundId}</h1>
-        </article>
-      </div> */}
-      <div className="card lg:card-side bordered rounded-lg  shadow-lg">
+      <div className="card lg:card-side bordered rounded-lg shadow-lg">
         <figure className="p-6">
           <img
             src={`/${compound.img}`}
@@ -117,32 +144,12 @@ const CompoundDetailPage: NextPage<{ compound: Compound | undefined }> = ({
           </div>
           <div className="mt-5">
             <h1>Assay Results</h1>
-            <table className="table w-full">
-              <thead>
-                <tr>
-                  <th></th>
-                  <th>Bio Target</th>
-                  <th>Result</th>
-                  <th>Value</th>
-                </tr>
-              </thead>
-              <tbody>
-                {compound.assayResultsByCompoundId.nodes.map((ar) =>
-                  ar ? (
-                    <tr key={ar.resultId}>
-                      <th>
-                        <Link href={`/assay-result/${ar.resultId}`}>
-                          <a className="link link-primary">{ar.resultId}</a>
-                        </Link>
-                      </th>
-                      <td>{ar.bioTarget}</td>
-                      <td>{ar.result}</td>
-                      <td>{ar.val}</td>
-                    </tr>
-                  ) : null
-                )}
-              </tbody>
-            </table>
+            <Table<AssayResult>
+              data={compound.assayResultsByCompoundId.nodes.filter(
+                isDefinitelyAssayResult
+              )}
+              columns={columns}
+            />
           </div>
         </div>
       </div>
