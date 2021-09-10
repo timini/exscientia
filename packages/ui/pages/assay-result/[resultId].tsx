@@ -1,10 +1,11 @@
 import { gql } from "@apollo/client";
-import { AssayResult } from "@exscientia/types";
+import { AssayResult, Compound } from "@exscientia/types";
 import client from "apollo-client";
-import { Stat } from "components";
+import { Stat, Table } from "components";
 import type { NextPage } from "next";
 import { GetServerSideProps } from "next";
 import Link from "next/link";
+import { Column } from "react-table";
 
 const GET_ASSAY_RESULT_BY_ID = gql`
   query GetAssayResultById($resultId: Int!) {
@@ -52,6 +53,21 @@ export const getServerSideProps: GetServerSideProps<
   };
 };
 
+const columns: Column<Compound>[] = [
+  {
+    Header: "",
+    accessor: "compoundId",
+    Cell: ({ row }) => (
+      <Link href={`/compound/${row.values.compoundId}`} {...row.getRowProps()}>
+        <a className="link link-primary">{row.values.compoundId}</a>
+      </Link>
+    ),
+  },
+  { Header: "Molecular Formula", accessor: "molecularFormula" },
+  { Header: "ALogP", accessor: "alogp" },
+  { Header: "Molecular Weight", accessor: "molecularWeight" },
+];
+
 const AssayResultDetailPage: NextPage<{
   assayResult: AssayResult | undefined;
 }> = ({ assayResult }) => {
@@ -89,28 +105,12 @@ const AssayResultDetailPage: NextPage<{
         </div>
         <div className="mt-5">
           <h1>Compound</h1>
-          <table className="table w-full">
-            <thead>
-              <tr>
-                <th></th>
-                <th>Molecular Formula</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <th>
-                  <Link
-                    href={`/compound/${assayResult.compoundByCompoundId?.compoundId}`}
-                  >
-                    <a className="link link-primary">
-                      {assayResult.compoundByCompoundId?.compoundId}
-                    </a>
-                  </Link>
-                </th>
-                <td>{assayResult.compoundByCompoundId?.molecularFormula}</td>
-              </tr>
-            </tbody>
-          </table>
+          {assayResult.compoundByCompoundId && (
+            <Table<Compound>
+              columns={columns}
+              data={[assayResult.compoundByCompoundId]}
+            />
+          )}
         </div>
       </div>
     </div>
