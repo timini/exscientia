@@ -8,4 +8,4 @@ RUN yarn
 
 RUN yarn workspace @exscientia/ui build
 
-RUN yarn workspace @exscientia/ui start
+CMD yarn workspace @exscientia/ui start

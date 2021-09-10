@@ -18,3 +18,9 @@ services:
       - PGHOST=db
   ui:
     build: .
+    depends_on:
+      - graphql
+    environment:
+      - GRAPHQL_ENDPOINT=http://graphql:5000/graphql
+    ports:
+      - 3000:3000
