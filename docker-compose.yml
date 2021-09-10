@@ -16,3 +16,5 @@ services:
     environment:
       # when running in docker network db is avaible under the name of the service
       - PGHOST=db
+  ui:
+    build: .

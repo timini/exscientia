@@ -11,9 +11,15 @@ export function Table<T extends Record<string, unknown>>({
     <table {...getTableProps()} className="table w-full">
       <thead>
         {headerGroups.map((headerGroup) => (
-          <tr {...headerGroup.getHeaderGroupProps()}>
+          <tr
+            {...headerGroup.getHeaderGroupProps()}
+            key={headerGroup.getHeaderGroupProps().key}
+          >
             {headerGroup.headers.map((column) => (
-              <th {...column.getHeaderProps(column.getSortByToggleProps())}>
+              <th
+                {...column.getHeaderProps(column.getSortByToggleProps())}
+                key={column.getHeaderProps(column.getSortByToggleProps()).key}
+              >
                 {column.render("Header")}
                 {column.isSorted ? (column.isSortedDesc ? " 🔽" : " 🔼") : ""}
               </th>
@@ -25,9 +31,13 @@ export function Table<T extends Record<string, unknown>>({
         {rows.map((row) => {
           prepareRow(row);
           return (
-            <tr {...row.getRowProps()}>
+            <tr {...row.getRowProps()} key={row.getRowProps().key}>
               {row.cells.map((cell) => {
-                return <td {...cell.getCellProps()}>{cell.render("Cell")}</td>;
+                return (
+                  <td {...cell.getCellProps()} key={row.getRowProps().key}>
+                    {cell.render("Cell")}
+                  </td>
+                );
               })}
             </tr>
           );
